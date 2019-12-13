@@ -1,5 +1,6 @@
 # Python Linear Regression Machine Learning using the Pandas and Sklearn Libraries
-
+# Paulo Cortez, University of Minho, GuimarÃ£es, Portugal, http://www3.dsi.uminho.pt/pcortez
+# UCI Machine Learning Repository [https://archive.ics.uci.edu/ml/datasets/student+performance]
 # required libraries
 import pandas as pd
 import numpy as np
@@ -20,7 +21,7 @@ else:
 
 # read .csv file
 studentData = pd.read_csv("Test Scores/student-dat.csv", sep=";")
-studentData = studentData[["age", "Medu", "Fedu", "traveltime", "studytime", "failures", "famrel", "freetime", "goout", "Dalc", "Walc", "health", "absences", "G1", "G2", "G3"]]
+studentData = studentData[["age", "Medu", "Fedu", "traveltime", "studytime", "failures", "famrelquality", "freetime", "goout", "dayalcohol", "weekendalcohol", "health", "absences", "G1", "G2", "G3"]]
 
 # we want to predict the end grade, so the prediction goal is G3
 goalPrediction = "G3"
@@ -54,7 +55,7 @@ if trainAI:
 
         # accuracy of best fit line
         linearAcc = linearRegress.score(x_test, y_test)
-        print("Training round ", x + 1, " had an accuracy of ", "%.01f" % (linearAcc * 100), "%", sep="")
+        print("Training round ", x + 1, " had an accuracy of ", f, "%", sep="")
 
         # did any of the training rounds surpass the pickled data file's accuracy?
         if linearAcc > winningDatSet:
@@ -94,16 +95,16 @@ for x in range(len(predictions)):
 
 # graph plotting to see the relationships for individual pieces of data
 def ask():
-    p = input("\nWhich graph would you like to display?")
+    graphReq = input("\nWhich graph would you like to display?")
     try:
         style.use("ggplot")
-        pyplot.scatter(studentData[p], studentData["G3"])
-        pyplot.xlabel(p)
+        pyplot.scatter(studentData[graphReq], studentData["G3"])
+        pyplot.xlabel(graphReq)
         pyplot.ylabel("Final Grade")
         pyplot.show()
     except KeyError:
         print("Oops! That's not an option. These are though!")
-        print("age", "Medu", "Fedu", "traveltime", "studytime", "failures", "famrel", "freetime", "goout", "Dalc", "Walc", "health", "absences", "G1", "G2", "G3", sep=", ")
+        print("age", "Medu", "Fedu", "traveltime", "studytime", "failures", "famrelquality", "freetime", "goout", "dayalcohol", "weekendalcohol", "health", "absences", "G1", "G2", "G3", sep=", ")
         ask()
 
 

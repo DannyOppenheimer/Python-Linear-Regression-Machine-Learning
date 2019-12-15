@@ -1,7 +1,8 @@
-# Python Linear Regression Machine Learning using the Pandas and Sklearn Libraries
+# Python Linear Regression Machine Learning using Tensor Libraries
+# ---Credit---
 # Paulo Cortez, University of Minho, GuimarÃ£es, Portugal, http://www3.dsi.uminho.pt/pcortez
 # UCI Machine Learning Repository [https://archive.ics.uci.edu/ml/datasets/student+performance]
-# required libraries
+
 import pandas as pd
 import numpy as np
 import sklearn
@@ -20,7 +21,7 @@ else:
     trainAI = False
 
 # read .csv file
-studentData = pd.read_csv("Test Scores/student-dat.csv", sep=";")
+studentData = pd.read_csv("student-dat.csv", sep=";")
 studentData = studentData[["age", "Medu", "Fedu", "traveltime", "studytime", "failures", "famrelquality", "freetime", "goout", "dayalcohol", "weekendalcohol", "health", "absences", "G1", "G2", "G3"]]
 
 # we want to predict the end grade, so the prediction goal is G3
@@ -37,7 +38,7 @@ x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(X, Y
 
 
 # best current data set, saved in bestLearn.txt
-listBest = open("Test Scores/bestLearn.txt", "r").readlines(1)
+listBest = open("bestLearn.txt", "r").readlines(1)
 winningDatSet = float(listBest[0].translate({ord('b'): None}))
 
 # has the training rounds yielded any better data sets?
@@ -55,7 +56,7 @@ if trainAI:
 
         # accuracy of best fit line
         linearAcc = linearRegress.score(x_test, y_test)
-        print("Training round ", x + 1, " had an accuracy of ", f, "%", sep="")
+        print("Training round ", x + 1, " had an accuracy of ", "%.01f" % (linearAcc * 100), "%", sep="")
 
         # did any of the training rounds surpass the pickled data file's accuracy?
         if linearAcc > winningDatSet:
@@ -68,7 +69,7 @@ if trainAI:
             print("Training round ", x + 1, " has the running best accuracy of ", "%.01f" % (winningDatSet * 100), "%", sep="")
 
             # create a new pickle file if there isn't one, or write to an existing one
-            with open("Test Scores/studentModel.pickle", "wb") as f:
+            with open("studentModel.pickle", "wb") as f:
                 # dump linear regression into above pickle file
                 pickle.dump(linearRegress, f)
 
@@ -79,7 +80,7 @@ if trainAI:
 
 
 # open pickle file to access other information
-pickleIn = open("Test Scores/studentModel.pickle", "rb")
+pickleIn = open("studentModel.pickle", "rb")
 linearRegressData = pickle.load(pickleIn)
 print("\n***********************************************")
 print("* Coefficients: ", linearRegressData.coef_)

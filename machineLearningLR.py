@@ -61,12 +61,12 @@ if train_AI:
         # did any of the training rounds surpass the pickled data file's accuracy?
         if linear_acc > winningDatSet:
             foundMoreAccDat = True
-            winning_dat_set = linear_acc
+            winningDatSet = linear_acc
 
             # save that value to a txt file
             with open("Test Scores/bestLearn.txt", "w") as h:
-                h.write(str(winning_dat_set))
-            print("Training round ", x + 1, " has the running best accuracy of ", "%.01f" % (winning_dat_set * 100), "%", sep="")
+                h.write(str(winningDatSet))
+            print("Training round ", x + 1, " has the running best accuracy of ", "%.01f" % (winningDatSet * 100), "%", sep="")
 
             # create a new pickle file if there isn't one, or write to an existing one
             with open("studentModel.pickle", "wb") as f:
@@ -76,7 +76,7 @@ if train_AI:
     if foundMoreAccDat:
         print("Final accuracy: ", "%.01f" % (winningDatSet * 100), "%", sep="")
     else:
-        print("This training run didn't get a higher accuracy than a saved one :( current set has an accuracy of: ", "%.01f" % (winning_dat_set * 100), "%", sep="")
+        print("This training run didn't get a higher accuracy than a saved one :( current set has an accuracy of: ", "%.01f" % (winningDatSet * 100), "%", sep="")
 
 
 # open pickle file to access other information
